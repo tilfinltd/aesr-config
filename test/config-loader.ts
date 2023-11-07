@@ -27,6 +27,14 @@ describe("ConfigLoader", () => {
           },
         },
         {
+          name: "target1-3",
+          startLine: 8,
+          params: {
+            role_arn: "arn:aws:iam::111122223336:role/sso/path/to/role",
+            source_profile: "base1",
+          },
+        },
+        {
           name: "base1",
           startLine: 10,
           params: {
@@ -76,6 +84,11 @@ describe("ConfigLoader", () => {
             name: "target1-2",
             aws_account_id: "111122223335",
             role_name: "role2",
+          },
+          {
+            name: "target1-3",
+            aws_account_id: "111122223336",
+            role_name: "sso/path/to/role",
           },
         ],
       });
