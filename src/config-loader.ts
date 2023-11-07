@@ -106,7 +106,9 @@ export class ConfigLoader {
   parseRoleArn(
     roleArn: string,
   ): { aws_account_id: string; role_name: string } | null {
-    const [prefix, role] = roleArn.split("/", 2);
+    const si = roleArn.indexOf("/");
+    const prefix = roleArn.substring(0, si);
+    const role = roleArn.substring(si + 1);
     if (role === undefined) return null;
 
     const iams = prefix.split(":");
