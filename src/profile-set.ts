@@ -64,7 +64,7 @@ export class ProfileSet {
     ) {
       return { name, aws_account_id, role_name, ...others };
     }
-    throw new ValidationError("unreachable");
+    throw new Error("unreachable");
   }
 
   createComplexProfile(
