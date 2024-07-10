@@ -18,7 +18,9 @@
     "clean": "rm -r lib/",
     "build": "tsc --declaration",
     "test": "node --loader tsx --test ./test/*.ts",
-    "format": "prettier --write \"bin/*.js\" \"src/**/*.ts\" \"test/**/*.ts\""
+    "format": "prettier --write \"bin/*.js\" \"src/**/*.ts\" \"test/**/*.ts\"",
+    "prepublishOnly": "npm test",
+    "prepare": "npm run build"
   },
   "devDependencies": {
     "@types/node": "^20.4.5",
