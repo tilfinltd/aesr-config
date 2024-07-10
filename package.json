@@ -1,6 +1,6 @@
 {
   "name": "aesr-config",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "The utilities for AWS Extend Switch Roles configuration in INI format",
   "author": "Toshimitsu Takahashi (Tilfin Ltd.)",
   "license": "MIT",
