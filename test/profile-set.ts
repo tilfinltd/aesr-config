@@ -68,6 +68,7 @@ describe("ProfileSet", () => {
           });
         },
         {
+          code: "INVALID_PROFILE_NAME",
           message: "singles[0].name is required to be a valid string.",
         },
       );
@@ -88,6 +89,7 @@ describe("ProfileSet", () => {
           });
         },
         {
+          code: "INVALID_AWS_ACCOUNT_ID",
           message:
             "singles[0].aws_account_id is required to be a valid string.",
         },
@@ -109,6 +111,7 @@ describe("ProfileSet", () => {
           });
         },
         {
+          code: "INVALID_ROLE_NAME",
           message: "singles[0].role_name is required to be a valid string.",
         },
       );
@@ -129,6 +132,7 @@ describe("ProfileSet", () => {
           });
         },
         {
+          code: "INVALID_PROFILE_NAME",
           message: "complexes[0].name is required to be a valid string.",
         },
       );
@@ -149,6 +153,7 @@ describe("ProfileSet", () => {
           });
         },
         {
+          code: "INVALID_AWS_ACCOUNT_ID",
           message:
             "complexes[0].aws_account_id is required to be a valid string.",
         },
@@ -172,6 +177,7 @@ describe("ProfileSet", () => {
           });
         },
         {
+          code: "INVALID_AWS_ACCOUNT_ALIAS",
           message: "complexes[0].aws_account_alias must be a valid string.",
         },
       );
@@ -187,6 +193,7 @@ describe("ProfileSet", () => {
           });
         },
         {
+          code: "INVALID_SINGLES_TYPE",
           message: "singles must be an array.",
         },
       );
@@ -202,6 +209,7 @@ describe("ProfileSet", () => {
           });
         },
         {
+          code: "INVALID_COMPLEXES_TYPE",
           message: "complexes must be an array.",
         },
       );
@@ -222,6 +230,7 @@ describe("ProfileSet", () => {
           } as any);
         },
         {
+          code: "INVALID_TARGETS_TYPE",
           message: "complexes[0].targets must be an array.",
         },
       );
@@ -243,6 +252,7 @@ describe("ProfileSet", () => {
           } as any);
         },
         {
+          code: "INVALID_TARGETS_TYPE",
           message: "complexes[0].targets must be an array.",
         },
       );
@@ -269,6 +279,7 @@ describe("ProfileSet", () => {
           } as any);
         },
         {
+          code: "INVALID_PROFILE_NAME",
           message:
             "complexes[0].targets[0].name is required to be a valid string.",
         },
@@ -298,6 +309,7 @@ describe("ProfileSet", () => {
           });
         },
         {
+          code: "INVALID_ROLE_NAME",
           message: "complexes[0].targets[0].role_name must be a valid string.",
         },
       );
@@ -319,6 +331,7 @@ describe("ProfileSet", () => {
           });
         },
         {
+          code: "INVALID_ROLE_NAME",
           message:
             "complexes[0].targets[0].role_name is required to be a valid string.",
         },
