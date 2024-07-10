@@ -184,4 +184,38 @@ parameter definition does not contain equal
       );
     });
   });
+
+  describe("when property value is space", () => {
+    it('throws an error whose message is "Invalid parameter definition"', () => {
+      assert.throws(
+        () => {
+          const iniParser = new IniParser();
+          iniParser.parse(`\
+[a]
+key =  
+`);
+        },
+        {
+          message: "Invalid parameter definition",
+        },
+      );
+    });
+  });
+
+  describe("when property value is empty", () => {
+    it('throws an error whose message is "Invalid parameter definition"', () => {
+      assert.throws(
+        () => {
+          const iniParser = new IniParser();
+          iniParser.parse(`\
+[b]
+key =
+`);
+        },
+        {
+          message: "Invalid parameter definition",
+        },
+      );
+    });
+  });
 });

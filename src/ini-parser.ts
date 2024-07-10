@@ -80,9 +80,10 @@ export class IniParser {
     line: number,
   ): { key: string; value: string } {
     const [key, val] = text.split("=", 2);
-    if (val === undefined)
+    const value = val ? val.trim() : undefined;
+    if (!value)
       throw new IniParseError("Invalid parameter definition", text, line);
-    return { key: key.trim(), value: val.trim() };
+    return { key: key.trim(), value };
   }
 
   private appendCurrentItem() {
