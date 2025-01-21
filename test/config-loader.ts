@@ -165,4 +165,143 @@ describe("ConfigLoader", () => {
       );
     });
   });
+
+  describe("Single Configuration and Complex Configurations with Role chaining", () => {
+    it("loads single and complex profiles", () => {
+      const sectionItems: SectionItem[] = [
+        {
+          name: "root1",
+          startLine: 1,
+          params: {
+            aws_account_id: "000000000001",
+          },
+        },
+        {
+          name: "parent1",
+          startLine: 6,
+          params: {
+            aws_account_id: "000000000011",
+            role_name: "parent-role1",
+            source_profile: "root1",
+          },
+        },
+        {
+          name: "child1",
+          startLine: 11,
+          params: {
+            role_arn: "arn:aws:iam::000000000111:role/child-role1",
+            source_profile: "parent1",
+          },
+        },
+        {
+          name: "grandchild1",
+          startLine: 16,
+          params: {
+            aws_account_id: "000000001111",
+            role_name: "manager",
+            source_profile: "child1",
+          },
+        },
+        {
+          name: "child2",
+          startLine: 20,
+          params: {
+            aws_account_id: "000000000211",
+            role_name: "child-role2",
+            source_profile: "parent1",
+          },
+        },
+        {
+          name: "brother1to2",
+          startLine: 25,
+          params: {
+            aws_account_id: "000000000211",
+            role_name: "brother",
+            source_profile: "child1",
+          },
+        },
+        {
+          name: "brother2to1",
+          startLine: 30,
+          params: {
+            aws_account_id: "000000000111",
+            role_name: "brother",
+            source_profile: "child2",
+          },
+        },
+        {
+          name: "profile targetex",
+          startLine: 35,
+          params: {
+            aws_account_id: "333300001112",
+            role_name: "roleex",
+          },
+        },
+      ];
+      const profileSet = configLoader.load(sectionItems);
+      assert.deepEqual(profileSet.singles![0], {
+        name: "targetex",
+        aws_account_id: "333300001112",
+        role_name: "roleex",
+      });
+      assert.deepEqual(profileSet.complexes![0], {
+        name: "root1",
+        aws_account_id: "000000000001",
+        role_name: undefined,
+        targets: [
+          {
+            name: "parent1",
+            aws_account_id: "000000000011",
+            role_name: "parent-role1",
+          },
+        ],
+      });
+      assert.deepEqual(profileSet.complexes![1], {
+        name: "parent1",
+        aws_account_id: "000000000011",
+        role_name: "parent-role1",
+        targets: [
+          {
+            name: "child1",
+            aws_account_id: "000000000111",
+            role_name: "child-role1",
+          },
+          {
+            name: "child2",
+            aws_account_id: "000000000211",
+            role_name: "child-role2",
+          },
+        ],
+      });
+      assert.deepEqual(profileSet.complexes![2], {
+        name: "child1",
+        aws_account_id: "000000000111",
+        role_name: "child-role1",
+        targets: [
+          {
+            name: "grandchild1",
+            aws_account_id: "000000001111",
+            role_name: "manager",
+          },
+          {
+            name: "brother1to2",
+            aws_account_id: "000000000211",
+            role_name: "brother",
+          },
+        ],
+      });
+      assert.deepEqual(profileSet.complexes![3], {
+        name: "child2",
+        aws_account_id: "000000000211",
+        role_name: "child-role2",
+        targets: [
+          {
+            name: "brother2to1",
+            aws_account_id: "000000000111",
+            role_name: "brother",
+          },
+        ],
+      });
+    });
+  });
 });
