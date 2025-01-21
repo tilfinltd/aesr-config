@@ -49,7 +49,6 @@ export class ConfigLoader {
         });
         delete destsBySrcMap[name];
       } else if (isRoot) {
-        console.log('single item', item);
         this.#singleProfiles.push(item);
       }
     });
@@ -70,7 +69,8 @@ export class ConfigLoader {
 
   createProfileItem(sectionItem: SectionItem) {
     const name = sectionItem.name.replace(/^profile\s+/i, "");
-    let { aws_account_id, role_arn, role_name, source_profile, ...others } = sectionItem.params;
+    let { aws_account_id, role_arn, role_name, source_profile, ...others } =
+      sectionItem.params;
 
     if (role_arn) {
       if (aws_account_id || role_name) {
