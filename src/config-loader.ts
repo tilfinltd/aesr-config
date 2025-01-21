@@ -22,11 +22,10 @@ export class ConfigLoader {
     this.#complexProfiles = [];
 
     const destsBySrcMap: { [key: string]: ProfileItem[] } = {}; // { <srcProfileName>: [<destProfile>... ] }
-    const singleOrSrcProfiles: ProfileItem[] = [];
+    const profiles: (ProfileItem & { isRoot?: boolean })[] = [];
 
     sectionItems.forEach((sectionItem) => {
       const srcProf = sectionItem.params.source_profile;
-      delete sectionItem.params.source_profile;
 
       const item = this.createProfileItem(sectionItem);
       if (srcProf) {
@@ -35,19 +34,22 @@ export class ConfigLoader {
         } else {
           destsBySrcMap[srcProf] = [item];
         }
-      } else {
-        singleOrSrcProfiles.push(item);
       }
+      profiles.push({ ...item, isRoot: !srcProf });
     });
 
-    singleOrSrcProfiles.forEach((item) => {
-      if (item.name in destsBySrcMap) {
+    profiles.forEach((item) => {
+      const { name, isRoot } = item;
+      delete item.isRoot;
+
+      if (name in destsBySrcMap) {
         this.#complexProfiles.push({
           ...item,
-          targets: destsBySrcMap[item.name],
+          targets: destsBySrcMap[name],
         });
-        delete destsBySrcMap[item.name];
-      } else {
+        delete destsBySrcMap[name];
+      } else if (isRoot) {
+        console.log('single item', item);
         this.#singleProfiles.push(item);
       }
     });
@@ -68,7 +70,7 @@ export class ConfigLoader {
 
   createProfileItem(sectionItem: SectionItem) {
     const name = sectionItem.name.replace(/^profile\s+/i, "");
-    let { aws_account_id, role_arn, role_name, ...others } = sectionItem.params;
+    let { aws_account_id, role_arn, role_name, source_profile, ...others } = sectionItem.params;
 
     if (role_arn) {
       if (aws_account_id || role_name) {
