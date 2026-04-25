@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "clean": "rm -r lib/",
-    "build": "tsc --declaration",
+    "build": "tsc -p tsconfig.build.json",
     "test": "node --import tsx --test ./test/*.ts",
     "format": "prettier --write \"bin/*.js\" \"src/**/*.ts\" \"test/**/*.ts\"",
     "prepublishOnly": "npm test",
