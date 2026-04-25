@@ -16,19 +16,19 @@
   ],
   "scripts": {
     "clean": "rm -r lib/",
-    "build": "tsc --declaration",
+    "build": "tsc -p tsconfig.build.json",
     "test": "node --import tsx --test ./test/*.ts",
     "format": "prettier --write \"bin/*.js\" \"src/**/*.ts\" \"test/**/*.ts\"",
     "prepublishOnly": "npm test",
     "prepare": "npm run build"
   },
   "devDependencies": {
-    "@types/node": "^20.14.8",
+    "@types/node": "^25.6.0",
     "prettier": "3.4.2",
-    "tsx": "^3.14.0",
-    "typescript": "^5.5.4"
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   }
 }
